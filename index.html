@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>My rust demo</h1>
+    <form id="form">
+      <div>
+        <label for="ignored-words">Ignored words (separate them by '\n')</label>
+        <textarea cols="50" rows="20" id="ignored-words"></textarea>
+      </div>
+      <div>
+        <label for="text">Text to count</label>
+        <textarea cols="50" rows="20" id="text"></textarea>
+      </div>
+      <input type="submit" />
+    </form>
+    <p id="result"></p>
+    <script type="module">
+      import init, { count_words } from "./pkg/rust_for_js_demo.js";
+
+      async function run() {
+        await init();
+
+        document.getElementById("form").addEventListener("submit", event => {
+          event.preventDefault();
+
+          const ignoredWords = document.getElementById("ignored-words").value;
+          const text = document.getElementById("text").value;
+          const result = count_words(text, ignoredWords);
+
+          document.getElementById("result").innerHTML = result;
+        });
+      }
+
+      run();
+    </script>
+  </body>
+</html>
